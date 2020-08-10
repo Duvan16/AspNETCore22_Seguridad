@@ -1,4 +1,5 @@
 ﻿using AspNETCore22_Seguridad.Models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -14,6 +15,20 @@ namespace AspNETCore22_Seguridad.Contexts
             :base(options)
         {
 
+        }
+
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            var roleAdmin = new IdentityRole()
+            {
+                Id = "61bf8f7b-4ed9-4297-be86-7481cc2b6740",
+                Name = "admni",
+                NormalizedName = "admin"
+            };
+
+            builder.Entity<IdentityRole>().HasData(roleAdmin);
+
+            base.OnModelCreating(builder);
         }
     }
 }
