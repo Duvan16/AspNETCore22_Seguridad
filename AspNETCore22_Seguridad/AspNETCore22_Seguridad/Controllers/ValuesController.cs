@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using AspNETCore22_Seguridad.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
@@ -19,10 +20,12 @@ namespace AspNETCore22_Seguridad.Controllers
     public class ValuesController : ControllerBase
     {
         private readonly IDataProtector _protector;
+        private readonly HashService _hashService;
 
-        public ValuesController(IDataProtectionProvider protectionProvider)
+        public ValuesController(IDataProtectionProvider protectionProvider, HashService hashService)
         {
             _protector = protectionProvider.CreateProtector("valor_unico_y_quizas_secreto");
+            _hashService = hashService;
         }
 
         // GET api/values
@@ -30,6 +33,15 @@ namespace AspNETCore22_Seguridad.Controllers
         public ActionResult<IEnumerable<string>> Get()
         {
             return new string[] { "value1", "value2" };
+        }
+
+        [HttpGet("hash")]
+        public ActionResult GetHash()
+        {
+            string textoPlano = "Duvan Gonzalez";
+            var hashResult1 = _hashService.Hash(textoPlano).Hash;
+            var hashResult2 = _hashService.Hash(textoPlano).Hash;
+            return Ok(new { textoPlano, hashResult1, hashResult2 });
         }
 
         // GET api/values/5

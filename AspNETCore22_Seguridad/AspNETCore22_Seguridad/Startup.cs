@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using AspNETCore22_Seguridad.Contexts;
 using AspNETCore22_Seguridad.Models;
+using AspNETCore22_Seguridad.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -32,6 +33,7 @@ namespace AspNETCore22_Seguridad
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddScoped<HashService>();
             services.AddDataProtection();
 
             services.AddCors(options => {
