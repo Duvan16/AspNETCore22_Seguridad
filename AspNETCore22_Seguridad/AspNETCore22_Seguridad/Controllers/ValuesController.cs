@@ -4,14 +4,16 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AspNETCore22_Seguridad.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    //[EnableCors("PermitirApiRequest")]
 
-    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "admin")]
+    //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "admin")]
     public class ValuesController : ControllerBase
     {
         // GET api/values
@@ -23,6 +25,7 @@ namespace AspNETCore22_Seguridad.Controllers
 
         // GET api/values/5
         [HttpGet("{id}")]
+        [EnableCors("PermitirApiRequest")]
         public ActionResult<string> Get(int id)
         {
             return "value";

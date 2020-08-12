@@ -32,6 +32,10 @@ namespace AspNETCore22_Seguridad
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors(options => {
+                options.AddPolicy("PermitirApiRequest",
+                    builder => builder.WithOrigins("http://www.apirequest.io").WithMethods("GET", "POST").AllowAnyHeader());
+            });
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("defaultConnection")));
 
@@ -68,6 +72,11 @@ namespace AspNETCore22_Seguridad
 
             app.UseHttpsRedirection();
             app.UseAuthentication();
+            //app.UseCors(builder => builder.WithOrigins("http://www.apirequest.io"));
+            //app.UseCors(builder => builder.WithOrigins("http://www.apirequest.io").WithMethods("GET"));
+            //app.UseCors(builder => builder.WithOrigins("http://www.apirequest.io").WithMethods("GET","POST").WithHeaders("*"));
+            //app.UseCors(builder => builder.WithOrigins("http://www.apirequest.io").WithMethods("GET","POST").AllowAnyHeader());
+            app.UseCors();
             app.UseMvc();
         }
     }
